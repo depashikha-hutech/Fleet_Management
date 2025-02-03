@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./components/layout/Layout";
 import Home from "./components/home";
 import VehicleOnboarding from "./components/onboarding/VehicleOnboarding";
 import DriverOnboarding from "./components/onboarding/DriverOnboarding";
@@ -13,7 +14,7 @@ import ForgotPasswordForm from "./components/auth/ForgotPasswordForm";
 
 function App() {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         {/* Auth Routes */}
         <Route path="/login" element={<LoginForm />} />
@@ -21,16 +22,18 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordForm />} />
 
         {/* Protected Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/vehicles" element={<VehicleList />} />
-        <Route path="/vehicles/onboarding" element={<VehicleOnboarding />} />
-        <Route path="/drivers" element={<DriverList />} />
-        <Route path="/drivers/onboarding" element={<DriverOnboarding />} />
-        <Route path="/organization" element={<OrganizationList />} />
-        <Route
-          path="/organization/onboarding"
-          element={<OrganizationOnboarding />}
-        />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/vehicles" element={<VehicleList />} />
+          <Route path="/vehicles/onboarding" element={<VehicleOnboarding />} />
+          <Route path="/drivers" element={<DriverList />} />
+          <Route path="/drivers/onboarding" element={<DriverOnboarding />} />
+          <Route path="/organization" element={<OrganizationList />} />
+          <Route
+            path="/organization/onboarding"
+            element={<OrganizationOnboarding />}
+          />
+        </Route>
 
         {/* Catch all */}
         <Route path="*" element={<Navigate to="/login" replace />} />
